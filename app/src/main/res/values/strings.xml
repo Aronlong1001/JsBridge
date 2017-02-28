@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="scan_tips">将条码/二维码对准扫描框即可自动扫描</string>
+    <string name="android_call_js">Android Call Js</string>
+</resources>

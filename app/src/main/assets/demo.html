@@ -1,0 +1,78 @@
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>
+        js调用java
+    </title>
+</head>
+
+<body>
+<p>
+    <input type="text" id="text1" placeholder="result"/>
+</p>
+<p>
+    <input type="button" id="scan" value="扫一扫" onclick="scanClick();"
+    />
+</p>
+<p>
+    <input type="text" id="text2" placeholder="result2"/>
+</p>
+<p>
+    <input type="button" id="test" value="测试" onclick="test();"
+    />
+</p>
+
+<script>
+
+        function test() {
+            window.WebViewJavascriptBridge.callHandler('test',null, function (response) {
+                document.getElementById('text2').value = response;
+            })
+        }
+<!--第一参数：方法名-->
+<!--第二个:js调用native的请求参数-->
+<!--第三个：js在被回调后具体执行方法，responseData为java层回传jsonStr.-->
+
+        function scanClick() {
+            var value = document.getElementById("scan").value;
+            window.WebViewJavascriptBridge.callHandler('handleScan',null,function(response){
+                document.getElementById('text1').value = response;
+            });
+        }
+
+        function connectWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) {
+            console.log('JS got a message');
+                callback(WebViewJavascriptBridge)
+            } else {
+            console.log('JS got a message ===');
+                document.addEventListener(
+                    'WebViewJavascriptBridgeReady'
+                    , function() {
+                        callback(WebViewJavascriptBridge)
+                    },
+                    false
+                );
+            }
+        }
+
+//第一次连接时初始化bridge
+        connectWebViewJavascriptBridge(function(bridge) {
+            bridge.init(function(message, responseCallback) {
+                console.log('JS got a message', message);
+                var data = {
+                    'Javascript Responds': '测试中文!'
+                };
+                console.log('JS responding with', data);
+                responseCallback(data);
+            });
+
+            bridge.registerHandler("fromAndroid", function(data, responseCallback) {
+                var responseData = "Javascript Says Right back aka!";
+                responseCallback(responseData);
+            });
+        })
+
+</script>
+</body>
+</html>
