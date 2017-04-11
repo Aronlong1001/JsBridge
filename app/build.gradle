@@ -1,8 +1,21 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
+
+//    sourceSets {
+//        main {
+//            manifest.srcFile 'AndroidManifest.xml'
+//            java.srcDirs = ['src/main/java']
+//            jniLibs.srcDirs = ['jniLibs']
+//            resources.srcDirs = ['src']
+//            aidl.srcDirs = ['src']
+//            renderscript.srcDirs = ['src']
+//            res.srcDirs = ['res']
+//            assets.srcDirs = ['assets']
+//        }
+//    }
 
     defaultConfig {
         applicationId "test.aron.com.myapplication"
@@ -12,18 +25,49 @@ android {
         versionName "1.0"
 
     }
+
+    signingConfigs {//签名配置
+        release {//发布版签名配置
+            storeFile file("bailian.keystore")//密钥文件路径
+            storePassword "bailian"//密钥文件密码
+            keyAlias "bailian"//key别名
+            keyPassword "bailian"//key密码
+        }
+        debug {//debug版签名配置
+            storeFile file("debug.keystore")//密钥文件路径
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release//设置签名信息
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
+}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile(name: 'blpsdk-debug', ext: 'aar')
+    compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'cn.yipianfengye.android:zxing-library:2.1'
     compile project(':library')
 }

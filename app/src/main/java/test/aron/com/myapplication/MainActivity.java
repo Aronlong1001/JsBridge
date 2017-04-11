@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 0);
             }
         });
-        bridgeWebView.registerHandler("test", new BridgeHandler() {
+        bridgeWebView.registerHandler("handleScan", new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
                 callBackFunction = function;

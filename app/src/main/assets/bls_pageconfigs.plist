@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>home</key>
+    <dict>
+        <key>title</key>
+        <string>home</string>
+        <key>type</key>
+        <string>web</string>
+        <key>className</key>
+        <string>test.aron.com.myapplication</string>
+        <key>path</key>
+        <string>http://10.199.22.107:8088/#/index2</string>
+        <key>domain</key>
+        <string></string>
+        <key>requireLogin</key>
+        <string></string>
+    </dict>
+</dict>
+</plist>
